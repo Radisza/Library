@@ -6,6 +6,14 @@
     min-height: 0;
 }
 
+:root {
+    --padding-inputs: 0.5em;
+    --width-inputs-border: 1.5px;
+    --radius-inputs: 0.25em;
+    --margin-inputs: 0.25em;
+    --co-inputs-active-border: #0891b2;
+}
+
 body {
     background-color:#e7e5e4 ;
 }
@@ -42,4 +50,23 @@ body {
 .books td {
     border: 2px solid darkgrey;
     padding: 8px;
+}
+
+button,
+select,
+input {
+    padding: var(--padding-inputs);
+    border: var(--width-inputs-border) solid;
+    border-radius: var(--radius-inputs);
+    margin: var(--margin-inputs);
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:active,
+    &:hover,
+    &:focus {
+        border-color:  var(--co-inputs-active-border);
+    }
 }

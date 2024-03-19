@@ -9,9 +9,25 @@
 </head>
 <body>
     <div class="container">
-        <div class="new_book">New book</div>
+        <div class="new_book_box">
+            <div>Add new book</div>
+            <form class="new_book">
+                <input type="text" name="title" placeholder="Title" required>
+                <input type="text" name="author" placeholder="Author" required>
+                <input type="number" name="pages" placeholder="Number of pages" min="1" step="1" required>
+
+                <select name="read" required>
+                    <option value="default" selected disabled>-Has it been read?--</option>
+                    <option value="true">Read</option>
+                    <option value="false">Not read</option>
+                </select>
+
+                <input type="submit" value="Add book">
+            </form>
+        </div>
+
         <div class="library">
-            <div class="search_book">
+            <div class="search_box">
                 <input type="text" name="title" placeholder="Search title">
             </div>
             <div class="books_container">
