@@ -35,6 +35,7 @@ body {
     table-layout: auto;
     width: 100%;
     margin: 16px;
+    border-spacing: 0;
 }
 
 .books th,
