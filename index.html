@@ -12,15 +12,28 @@
         <div class="new_book_box">
             <div>Add new book</div>
             <form class="new_book">
-                <input type="text" name="title" placeholder="Title" required>
-                <input type="text" name="author" placeholder="Author" required>
-                <input type="number" name="pages" placeholder="Number of pages" min="1" step="1" required>
+                <div class="new_title">
+                    <input type="text" name="new_title" placeholder="Title">
+                    <p class="error"></p>
+                </div>
+                <div class="author">
+                    <input type="text" name="author" placeholder="Author" >
+                    <p class="error"></p>
+                </div>
+                
+                <div class="pages">
+                    <input type="number" name="pages" placeholder="Number of pages" step="0.1" >
+                    <p class="error"></p>
+                </div>
 
-                <select name="read" required>
-                    <option value="default" selected disabled>-Has it been read?--</option>
-                    <option value="true">Read</option>
-                    <option value="false">Not read</option>
-                </select>
+                <div class="read">
+                    <select name="read">
+                        <option value="default" selected disabled>-Has it been read?--</option>
+                        <option value="true">Read</option>
+                        <option value="false">Not read</option>
+                    </select>
+                    <p class="error"></p>
+                </div>
 
                 <input type="submit" value="Add book">
             </form>

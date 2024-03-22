@@ -70,3 +70,9 @@ input {
         border-color:  var(--co-inputs-active-border);
     }
 }
+
+.error {
+    color: darkred;
+    text-align: left;
+    font-size: 0.7em;
+}

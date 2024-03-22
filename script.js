@@ -15,7 +15,7 @@ function create_books(num) {
     ]
 
     for (let i = 0 ; i < num; i++) {
-        books.push(new Book(`Author ${i}`, `Title ${i}`, Math.floor(Math.random() * 300), i%2 == 0));
+        books.push(new Book(`Title ${i}`, `Author ${i}`, Math.floor(Math.random() * 300), i%2 == 0));
     }
     return books;
 }
@@ -50,20 +50,88 @@ function add_book_to_library(book) {
     add_book_to_table(book);
 }
 
-let books = create_books(10);
+let books = create_books(1);
 show_books_table(books);
+
+function set_error_msg(form, input_name, msg) {
+    let error_box = form.querySelector(`.${input_name}>.error`);
+    error_box.innerText = msg;
+}
+
+function clear_errors(form) {
+    for (let name of ["new_title", "author", "pages", "read"]) {
+       set_error_msg(form, name, "");
+    }
+}
+
+function getValue(form, form_data, name) {
+    let value = form_data.get(name);
+    if (!value) {
+        set_error_msg(form, name, "This field is required");
+        return null;
+    } 
+
+    return value;
+}
+
+function parseToPositiveInteger(form, input_name, value) {
+    let number = parseInt(value);
+    if (number && number > 0 && number.toString() == value) {
+        return value;
+    }
+    
+    set_error_msg(form, input_name, "This field must be positive integer");
+    return null;
+}
+
+function getPagesValue(form, form_data, name) {
+    let value = getValue(form, form_data, name);
+    if (value) {
+        return parseToPositiveInteger(form, name, value)
+    }
+    return null;
+}
+
+function getReadValue(form, form_data, name) {
+    let value = getValue(form, form_data, name);
+    if (value) {
+        switch (value) {
+            case "true":
+                return true;
+            case "false":
+                return false;
+            default:
+                set_error_msg(form, name, "Incorrect value.");
+        }
+    }
+    return null;
+}
 
 let book_form = document.querySelector('.new_book');
 book_form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const form_data = new FormData(book_form);
-    console.log(form_data);
-    add_book_to_library (new Book(
-        title = form_data.get("title"),
-        author = form_data.get("author"),
-        pages = form_data.get("pages"),
-        read = form_data.get("read") == "true" ? true : false,
-    ))
+
+    clear_errors(event.target);
+    
+    const form_data = new FormData(event.target);
+    
+    let title = getValue(event.target, form_data, "new_title");
+    let author = getValue(event.target, form_data, "author");
+    let pages = getPagesValue(event.target, form_data, "pages");
+    let read = getReadValue(event.target, form_data, "read");
+
+    if ([title, author, pages, read].includes(null))
+    {
+        return null;
+    }
+
+    if (books.some((book) => book.title == title)) {
+        alert(`Book ${title} already exists`);
+    } else {
+        add_book_to_library (
+            new Book(title, author, pages, read == "true" ? true: false)
+        )
+    }
 
     book_form.reset();
 })
