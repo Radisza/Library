@@ -20,17 +20,24 @@ function create_books(num) {
     return books;
 }
 
+function get_book_library() {
+    let books_table = document.querySelector('.books');
+    return books_table.querySelector('tbody');
+
+}
+
 function show_books_table(books) {
+    let table = get_book_library();
+    table.innerHTML = "";
     for (book of books) {
-        add_book_to_table(book)
+        add_book(table, book)
     }
 }
-function add_book_to_table(book) {
-    let books_table = document.querySelector('.books');
-    let row = books_table.insertRow(-1);
+function add_book(table, book) {
+    let row = table.insertRow(-1);
 
     let nr = row.insertCell(-1);
-    nr.innerText = books_table.rows.length-1;
+    nr.innerText = table.rows.length-1;
 
     let title = row.insertCell(-1);
     title.innerText = book.title;
@@ -47,7 +54,7 @@ function add_book_to_table(book) {
 
 function add_book_to_library(book) {
     books.push(book);
-    add_book_to_table(book);
+    add_book(get_book_library(), book);
 }
 
 let books = create_books(1);
@@ -69,9 +76,9 @@ function getValue(form, form_data, name) {
     if (!value) {
         set_error_msg(form, name, "This field is required");
         return null;
-    } 
+    }
 
-    return value;
+    return value.trim();
 }
 
 function parseToPositiveInteger(form, input_name, value) {
@@ -79,7 +86,7 @@ function parseToPositiveInteger(form, input_name, value) {
     if (number && number > 0 && number.toString() == value) {
         return value;
     }
-    
+
     set_error_msg(form, input_name, "This field must be positive integer");
     return null;
 }
@@ -112,9 +119,9 @@ book_form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     clear_errors(event.target);
-    
+
     const form_data = new FormData(event.target);
-    
+
     let title = getValue(event.target, form_data, "new_title");
     let author = getValue(event.target, form_data, "author");
     let pages = getPagesValue(event.target, form_data, "pages");
