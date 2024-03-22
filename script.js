@@ -142,3 +142,10 @@ book_form.addEventListener('submit', (event) => {
 
     book_form.reset();
 })
+
+let search_book = document.querySelector(".search_box>input");
+search_book.addEventListener("change", (event) => {
+    const regex = new RegExp(`.*${event.target.value.toLowerCase()}.*`);
+    let books_to_show = books.filter((book) => regex.test(book.title.toLowerCase()));
+    show_books_table(books_to_show);
+});
