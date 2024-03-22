@@ -57,7 +57,7 @@ function add_book_to_library(book) {
     add_book(get_book_library(), book);
 }
 
-let books = create_books(1);
+let books = create_books(5);
 show_books_table(books);
 
 function set_error_msg(form, input_name, msg) {
